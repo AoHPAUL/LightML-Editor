@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightML Code Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/darcula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/elegant.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/eclipse.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/material.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Menu Bar -->
+ <div id="editor-container" class="contianer h-100">
+    <div id = "navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><span style="color:yellow">&#123;</span> Light ML Editor
+            <span style="color:yellow">&#125;</span></a>
+
+        <!-- Navbar Toggler (for mobile view) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav me-auto">
+                <!-- File Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="fileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/file.png" alt="Home Icon" width="16" height="16"> File
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="fileDropdown">
+                        <li><a class="dropdown-item" href="output.html" id="save-html" download>Save to .HTML</a></li>
+                        <li><a class="dropdown-item" href="input.lml" id="save-lml" download>Save to .LML</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="open-lml">Open .lml files</a></li>
+                        <!-- Hidden file input field -->
+                        <input type="file" id="file-input" class="form-control" accept=".lml" style="display: none;">
+                    </ul>
+                </li>
+                <!-- Insert Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="insertDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/insert.png" alt="Home Icon" width="16" height="16"> Insert
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="insertDropdown">
+                        <!-- Nav Button -->
+                        <li><a class="dropdown-item" href="#" onclick="insertNav()" id="save-both">Insert Navigation bar</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="insertBr()" id="save-both">Insert Break - good for spacing</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="insertHr()" id="save-both">Insert Horizontal rule</a></li>
+                        <!-- Text Submenu -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Text</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Headings</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H1')">Insert Header</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H1')">Insert Centered Header</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H2')">Insert Header 2</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H2')">Insert Centered Header 2</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H3')">Insert Header 3</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H3')">Insert Centered Header 3</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H4')">Insert Header 4</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H4')">Insert Centered Header 4</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H5')">Insert Header 5</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H5')">Insert Centered Header 5</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeader('H6')">Insert Header 6</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertHeaderCenter('H6')">Insert Centered Header 6</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Text</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertText()" id="insert-text">Insert Text</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertTextCenter()" id="insert-text">Insert Centered Text</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBoldText()" id="insert-bold-text">Bold Text</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertUnderlineText()" id="insert-underline-text">Underlined Text</a></li>
+                                    </ul>
+                                </li>
+                            
+                            </ul>
+                        </li>
+                        <!-- Images Submenu -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Images</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#" id="insert-image">Insert Image</a></li>
+                            </ul>
+                        </li>
+                        <!-- Lists Submenu -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Lists</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#" onclick="insertList()" id="insert-list">Insert Bulleted List</a></li>
+                            </ul>
+                        </li>
+                        <!-- Divs Submenu -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Divs</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#" id="insert-div">Insert Div</a></li>
+                            </ul>
+                        </li>                        
+                    </ul>
+                </li>
+                <!-- Bootshort Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="importsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/bootshorts.png" width="16" height="16"> Bootshorts
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="importsDropdown">
+                        <li><a class="dropdown-item text-info" onclick = "addBootstrap()" href="#">Make Sure to Import Bootstrap!</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Navbars</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#" onclick="insertBsNav()">Insert Navbar</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="insertBsDarkNav()">Insert Dark Navbar</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="#" onclick="insertBsHero()" id="insert-text">Insert Hero Section</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="insertBsCarousel()" id="insert-text">Insert Carousel</a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Div / Sections</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsDivHeadText()">Insert Header and text section</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsDiv()">Insert Empty section</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsDivCenter()">Insert Centered section</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsRow()">Insert Row section</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsCol()">Insert Column section</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Buttons</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonPrimary()">Insert blue button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonSecondary()">Insert grey button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonSuccess()">Insert green button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonDanger()">Insert red button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonWarning()">Insert yellow button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonLight()">Insert Light button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonDark()">Insert Dark button</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsButtonLink()">Insert Invisible button</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Alerts</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertPrimary()">Insert blue alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertSecondary()">Insert grey alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertSuccess()">Insert green alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertDanger()">Insert red alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertWarning()">Insert yellow alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertLight()">Insert Light alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertDark()">Insert Dark alert</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsAlertLink()">Insert Invisible alert</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">Gallerys</a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsGallery()">Insert 3x3 Gallery</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="insertBsDarkGallery()">Insert dark 3x3 Gallery</a></li>
+                                    </ul>
+                                </li>
+                    </ul>
+                </li>
+                <!-- Imports Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="importsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/imports.png" alt="Home Icon" width="16" height="16"> Imports
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="importsDropdown">
+                        <li><a class="dropdown-item" onclick="addBootstrap()" href="#">Import Bootstrap</a></li>
+                        <li><a class="dropdown-item" onclick="addTailwind()" href="#">Import Tailwind</a></li>
+                    </ul>
+                </li>
+                <!-- Templates Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="TemplatesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/templates.png" alt="Home Icon" width="16" height="16"> Templates
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="settingsDropdown">
+                        <li><a class="dropdown-item" onclick="addTemplateHome()" href="#">Home page template</a></li>
+                        <li><a class="dropdown-item" onclick="addTemplateGallery()" href="#">Gallery page template</a></li>
+                    </ul>
+                </li>
+                <!-- Settings Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="icons/settings.png" alt="Home Icon" width="16" height="16"> Settings
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="settingsDropdown">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Editor Themes</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#" onclick="changeTheme('monokai')">Monokai</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changeTheme('darcula')">Darcula</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changeTheme('elegant')">Elegant</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changeTheme('eclipse')">Eclipse</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changeTheme('material')">Material</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>            
+            <div class="form-check form-switch">
+            <label class="form-check-label text-light" id ="sizeLabel" for="screenSizeSwitch">25% Screen</label>
+            <input class="form-check-input" type="checkbox" id="screenSizeSwitch">
+            </div>
+            <!-- Pop-Out Preview Button aligned to the right -->
+            
+            <a href="preview.html" target="_blank" class="btn btn-primary ms-auto">Pop-Out Preview</a>
+            
+        
+    </div>
+</nav>
+</div>
+    <!-- Editor and Preview Section -->
+    <div id="LMLeditor" class="flex-grow-1 d-flex bg-dark">
+        <!-- Editor Pane -->
+        <div class="col-9 p-0" style="overflow-y: auto;">
+            <textarea id="code-editor" style="width: 100%; height: 100%; border: none;"></textarea>
+        </div>
+        
+        <!-- Preview Pane -->
+        <div class="col-3 p-0 border-start" style="overflow-y: auto;">
+            <iframe id="preview" class="w-100 h-100" style="border: none;"></iframe>
+        </div>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/addon/mode/simple.min.js"></script>
+    <script src="bootshort.js"></script>
+    <script src="script.js"></script>
+    <script src="inserts.js"></script>
+    <script src="templates.js"></script>
+</body>
+</html>
