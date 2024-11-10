@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="30" >
+    <title>LightML Editor - Live Preview</title>
+    <style>
+        /* Ensure html and body take up the full height of the viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Ensure iframe takes up the full height */
+        iframe {
+            height: 100%; /* 100% of its parent element */
+            width: 100%;  /* Full width */
+            border: none; /* Remove border if present */
+        }
+
+        /* If the iframe's parent has any specific styling */
+        .iframe-container {
+            height: 100%; /* Ensure the container takes full height */
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <iframe src="output.html"></iframe>
+    </div>
+</body>
+</html>

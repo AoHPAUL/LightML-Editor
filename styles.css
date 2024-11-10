@@ -1,0 +1,199 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Position the submenu to the right of the main menu */
+.dropdown-submenu {
+    position: relative;
+}
+
+#navbar {
+    flex: 0 0 auto; /* Navbar height is fixed */
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%; /* Move the submenu to the right */
+    margin-top: -1px; /* Align it nicely with the parent item */
+    /*transform: translateX(0); /* Add extra spacing if needed */
+    display: none; /* Initially hidden */
+}
+
+/* Only show the direct child submenu on hover */
+.dropdown-submenu:hover > .dropdown-menu,
+.dropdown-submenu:focus-within > .dropdown-menu {
+    display: block; /* Display only the direct submenu when hovered */
+}
+
+.editor-wrapper {
+    display: flex;
+    height: 100%;
+    background-color: #23262b;
+    color: #999999;
+    overflow: hidden;
+}
+
+.line-numbers {
+    background-color: #2b2b2b;
+    color: #666666;
+    text-align: right;
+    padding-right: 10px;
+    user-select: none;
+    min-width: 40px;
+}
+
+.code-editor {
+    flex: 1 1 auto; /* Takes up remaining space and can grow */
+    overflow: auto;
+    outline: none;
+    white-space: pre;
+    font-family: monospace;
+    background-color: #23262b;
+    color: #ffffff;
+}
+
+.code-editor:empty::before {
+    content: attr(placeholder);
+    color: #888888;
+}
+
+.CodeMirror-placeholder {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #a6e22e;
+    font-style: italic;
+    pointer-events: none; /* Make it non-clickable */
+    transform: translate(28px,-4px);
+}
+
+#LMLeditor {
+    flex: 1 1 auto; /* Editor takes remaining space */
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 56px); /* Ensure editor is below the navbar (56px is navbar height) */
+}
+#LMLeditor .col-9, #LMLeditor .col-3 {
+    height: 100%;
+    overflow-y: auto; /* Enable scrolling in the editor and preview */
+}
+#LMLeditor .col-6, #LMLeditor .col-6 {
+    height: 100%;
+    overflow-y: auto; /* Enable scrolling in the editor and preview */
+}
+textarea#code-editor {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: monospace;
+}
+iframe#preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.border {
+    height: 100%;
+}
+.preview-pane {
+    overflow: auto;
+    background-color: #FFF;
+}
+
+.svg-icon {
+    fill: white;  /* Some browsers support this */
+}
+
+/* Synchronize scrolling between line numbers and code editor */
+.code-editor::-webkit-scrollbar {
+    width: 8px;
+}
+
+.code-editor::-webkit-scrollbar-thumb {
+    background-color: #555;
+}
+
+.code-editor::-webkit-scrollbar-track {
+    background-color: #2b2b2b;
+}
+
+/* Ensure the editor and preview panes fill the available space */
+#LMLeditor .col-6 {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Set the height of the CodeMirror instance */
+.CodeMirror {
+    height: 100%;
+}
+
+#editor-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+}
+
+.cm-comment {
+    color: green;
+}
+
+.cm-bracket {
+    color: rgb(206, 219, 14) !important;
+    font-weight: bold;
+}
+
+.cm-operator {
+    color: cyan;
+}
+
+.cm-parentTags {
+    color: rgb(118, 40, 128);
+}
+
+/* Styles for custom tokens */
+.CodeMirror .cm-imports {
+    color: #0372ad; /* Light blue */
+}
+
+/* Make text inside ** bold */
+.CodeMirror .cm-bold {
+    font-weight: bold;
+}
+
+/* Make text inside ;; italics */
+.CodeMirror .cm-italics {
+    font-style: italic;
+}
+
+.CodeMirror .cm-variable-2 {
+    color: #118d17; /* Yellowish color for variables with $ */
+}
+
+.CodeMirror .cm-file-path {
+    color: #ce9178; /* Orange for file paths */
+}
+
+.CodeMirror .cm-punctuation {
+    color: #00f7ff; /* White for commas */
+}
+
+.cm-string {
+    color: #e6db74; /* Optional: Light yellow */
+}
+
+.cm-keyword {
+    color: #f92672; /* Optional: Pink */
+}
+
+.cm-variable {
+    color: #a6e22e; /* Optional: Light green */
+}
