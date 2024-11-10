@@ -31,3 +31,19 @@ The editor supports inserts. This will directly write the LML into the editor fo
 
 ![image](https://github.com/user-attachments/assets/dcacd939-6c30-477e-b7fb-0c65d605efe2)
 Other themes exist on the editor for those users that prefer different colours.
+
+<hr>
+
+**Installation**
+
+
+**Requirements & Set up**
+
+1. This application was written in Java and needs either a <a href="https://www.java.com/en/download/">Java runtime enviroment</a> or if you are a developer you may already have a version of the <a href="https://www.oracle.com/java/technologies/downloads/?er=221886">Java development kit</a>. If you dont have either installed and aren't sure, install the Java runtime enviroment.
+2. This applicaton also uses <a href="https://nodejs.org/en">node.js</a> you will need this installed.
+3. To set up the application you will need to install all the dependencies the application needs to run. To do this open the install.bat file inside the LightML-Editor folder.
+
+
+**Starting Light ML**
+
+Once all requirements and dependencies are installed you can start Light ML anytime by opening the launch file in the LightML-Editor folder and follow the link in the terminal (Ctrl+click). Closing the termnial window that opens will kill the server and stop the app from working.
