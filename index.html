@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/elegant.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/eclipse.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/theme/material.min.css">
-
     <link rel="stylesheet" href="styles.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,8 +23,6 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><span style="color:yellow">&#123;</span> Light ML Editor
             <span style="color:yellow">&#125;</span></a>
-
-        <!-- Navbar Toggler (for mobile view) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -193,6 +190,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="settingsDropdown">
                         <li><a class="dropdown-item" onclick="addTemplateHome()" href="#">Home page template</a></li>
                         <li><a class="dropdown-item" onclick="addTemplateGallery()" href="#">Gallery page template</a></li>
+                        <li><a class="dropdown-item" onclick="addTemplateBlog()" href="#">Blog page template</a></li>
                     </ul>
                 </li>
                 <!-- Settings Dropdown -->
@@ -219,7 +217,6 @@
             <input class="form-check-input" type="checkbox" id="screenSizeSwitch">
             </div>
             <!-- Pop-Out Preview Button aligned to the right -->
-            
             <a href="preview.html" target="_blank" class="btn btn-primary ms-auto">Pop-Out Preview</a>
             
         
@@ -228,12 +225,12 @@
 </div>
     <!-- Editor and Preview Section -->
     <div id="LMLeditor" class="flex-grow-1 d-flex bg-dark">
-        <!-- Editor Pane -->
+        <!-- Editor -->
         <div class="col-9 p-0" style="overflow-y: auto;">
             <textarea id="code-editor" style="width: 100%; height: 100%; border: none;"></textarea>
         </div>
         
-        <!-- Preview Pane -->
+        <!-- Preview -->
         <div class="col-3 p-0 border-start" style="overflow-y: auto;">
             <iframe id="preview" class="w-100 h-100" style="border: none;"></iframe>
         </div>

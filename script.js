@@ -2,17 +2,14 @@ document.addEventListener('keydown', function(event) {
     // Check if Ctrl (or Command on Mac) and "S" are pressed together
     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
         event.preventDefault();  // Prevent the browser's default save action
-        
-        // Your custom save functionality
-          // Example: Call your save function here
-        
+        this.getElementById("save-lml").click
         console.log('Custom save triggered!');
     }
 });
 // Open file
 document.getElementById('open-lml').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default action of the link
-    document.getElementById('file-input').click(); // Programmatically click the hidden file input
+    event.preventDefault();
+    document.getElementById('file-input').click();
 });
 
 // Handle file selection
@@ -23,18 +20,16 @@ document.getElementById('file-input').addEventListener('change', function(event)
         const reader = new FileReader();
         reader.onload = function(e) {
             const content = e.target.result;
-            // Handle the content of the file
             editor.setValue(content);
             console.log("File loaded successfully.");
         };
-        reader.readAsText(file); // Read the file content as text
+        reader.readAsText(file);
     }
-
-    // Reset the file input value so it can be used again
+    // Reset the file input field
     document.getElementById('file-input').value = '';
 });
 
-// Event listener for size
+// Event listener for size switching
 document.getElementById('screenSizeSwitch').addEventListener('change', function() {
     if (this.checked) {
         // 50% screen
@@ -48,6 +43,8 @@ document.getElementById('screenSizeSwitch').addEventListener('change', function(
         document.querySelector('label[for="screenSizeSwitch"]').textContent = '25% Screen';
     }
 });
+
+// Regex for defining groups for colours
 CodeMirror.defineSimpleMode('lightml', {
     start: [
         // Comments starting with // or #//
@@ -59,9 +56,9 @@ CodeMirror.defineSimpleMode('lightml', {
         // Commas
         { regex: /,/, token: 'punctuation' },
         // Bold text inside **
-        { regex: /\*\*(.*?)\*\*/, token: 'bold' },  // Match text inside **
+        { regex: /\*\*(.*?)\*\*/, token: 'bold' },
         // Italics text inside ;;
-        { regex: /\;\;(.*?)\;\;/, token: 'italics' },  // Match text inside ;;
+        { regex: /\;\;(.*?)\;\;/, token: 'italics' }, 
         // Strings (including paths like .png, .css, etc.)
         { regex: /"(?:[^\\]|\\.)*?"|(?:[a-zA-Z0-9-_\/]+\.png|\.jpg|\.css|\.js|\.html|\.lml)/, token: 'string' },
         // Imports & Inputs
@@ -71,7 +68,7 @@ CodeMirror.defineSimpleMode('lightml', {
         // Keywords for LightML syntax
         { regex: /\b(?:text|html|label|title|link|image|images|body|bs-[a-zA-Z0-9-]+|button|button2|list|header|h1|h2|h3|h4|h5|h6|logo)\b(?=\s*(?:=|\())/, token: 'keyword' },
         // Variables (including ones with $)
-        { regex: /\$\w+/, token: 'variable-2' },  // Variables starting with $
+        { regex: /\$\w+/, token: 'variable-2' },
         // Identifiers (general)
         { regex: /\b[a-zA-Z_][a-zA-Z0-9_]*\b/, token: 'variable' },
     ],
@@ -83,13 +80,13 @@ CodeMirror.defineSimpleMode('lightml', {
 
 // Initialize CodeMirror editor with custom indentation rules
 const editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
-    mode: 'lightml', // Use the custom LightML mode
-    theme: 'monokai', // Use the Monokai theme
+    mode: 'lightml', 
+    theme: 'monokai', 
     lineNumbers: true,
-    tabSize: 4,     // Tab size
+    tabSize: 4, 
     lineWrapping: true,
     autofocus: true,
-    matchBrackets: true,  // Match brackets and braces
+    matchBrackets: true, 
     indentWithTabs: true
 });
 function changeTheme(theme) {
@@ -104,17 +101,17 @@ editor.setOption('extraKeys', {
 
         // If the current line ends with an opening brace '{'
         if (line.trim().endsWith('{')) {
-            cm.replaceSelection('\n\t'); // Insert new line and indent
-            cm.setCursor(cursor.line + 1, cm.getLine(cursor.line + 1).length); // Move the cursor to the next line
+            cm.replaceSelection('\n\t'); 
+            cm.setCursor(cursor.line + 1, cm.getLine(cursor.line + 1).length); 
         } else {
-            cm.execCommand('newlineAndIndent'); // Default behavior for Enter key
+            cm.execCommand('newlineAndIndent');
         }
     }
 });
 // Handle automatic decrease of indentation when '}' is typed
 editor.on('beforeChange', function(cm, change) {
     if (change.origin === '+input' && change.text[0] === '}') {
-        cm.indentLine(change.from.line, 'subtract'); // Outdent the current line
+        cm.indentLine(change.from.line, 'subtract'); 
     }
 });
 // Function to update the HTML preview after conversion
@@ -151,6 +148,7 @@ async function updatePreview() {
 
 // Get the preview iframe element
 const preview = document.getElementById('preview');
+
 // Add event listener to the editor to trigger updates
 let debounceTimer;
 editor.on('change', () => {
@@ -159,13 +157,16 @@ editor.on('change', () => {
         updatePreview();
     }, 1500);
 });
+
 // Initial preview update
 updatePreview();
+
 // Placeholder text
 var placeholderText = "Enter LML here...";
 
 // Function to create and manage the placeholder
 function createPlaceholder() {
+
     // Create a div element for the placeholder
     var placeholder = document.createElement('div');
     placeholder.className = 'CodeMirror-placeholder';

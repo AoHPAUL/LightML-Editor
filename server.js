@@ -18,7 +18,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 // Enable CORS
 app.use(cors());
 
-// Parse text in request bodies
+// Parse text
 app.use(express.text());
 
 app.post('/convert', (req, res) => {
